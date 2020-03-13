@@ -23,5 +23,10 @@ namespace Predmetni_zadatak_1_Grafika
         {
             InitializeComponent();
         }
+
+        private void Apply_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

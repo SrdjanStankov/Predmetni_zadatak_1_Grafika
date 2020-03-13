@@ -59,7 +59,7 @@ namespace Predmetni_zadatak_1_Grafika
 
         private void Clear_Click(object sender, RoutedEventArgs e)
         {
-
+            Cnv.Children.Clear();
         }
 
         private void CanvasLeftMouse_Click(object sender, MouseButtonEventArgs e)
