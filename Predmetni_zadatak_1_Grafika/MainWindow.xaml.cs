@@ -24,5 +24,40 @@ namespace Predmetni_zadatak_1_Grafika
         {
             InitializeComponent();
         }
+
+        private void Elipse_Checked(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void Rectangle_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Polygon_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Image_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Undo_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Redo_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Clear_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
