@@ -31,7 +31,7 @@
          Background="Transparent"
          MouseLeftButtonUp="CanvasLeftMouse_Click"
          MouseRightButtonUp="CanvasRightMouse_Click">
-            <Ellipse
+            <Rectangle
              Canvas.Left="50"
              Canvas.Top="33"
              Width="20"

@@ -33,7 +33,8 @@ namespace Predmetni_zadatak_1_Grafika
 
         private void Rectangle_Checked(object sender, RoutedEventArgs e)
         {
-
+            var window = new RectangleWindow();
+            window.Show();
         }
 
         private void Polygon_Checked(object sender, RoutedEventArgs e)

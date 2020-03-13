@@ -1,0 +1,64 @@
+﻿<Window
+ x:Class="Predmetni_zadatak_1_Grafika.RectangleWindow"
+ xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+ xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+ xmlns:local="clr-namespace:Predmetni_zadatak_1_Grafika"
+ xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+ xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+ Title="Rectangle"
+ Width="336"
+ Height="364"
+ mc:Ignorable="d">
+    <Grid>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock
+             HorizontalAlignment="Center"
+             FontSize="16"
+             Text="Rectangle settings" />
+
+            <Separator />
+
+            <TextBlock Text="Width:" />
+            <xctk:DoubleUpDown
+             x:Name="EWidth"
+             Width="200"
+             Increment=".5"
+             Watermark="Width" />
+
+            <TextBlock Text="Height:" />
+            <xctk:DoubleUpDown
+             x:Name="EHeight"
+             Width="200"
+             Increment=".5"
+             Watermark="Height" />
+
+            <TextBlock Text="Fill:" />
+            <xctk:ColorPicker
+             x:Name="EFill"
+             Width="200"
+             DisplayColorAndName="True"
+             DisplayColorTooltip="True"
+             SelectedColor="Black" />
+
+            <TextBlock Text="Stroke:" />
+            <xctk:ColorPicker
+             x:Name="EStroke"
+             Width="200"
+             DisplayColorAndName="True"
+             DisplayColorTooltip="True"
+             SelectedColor="{x:Null}" />
+            <TextBlock Text="Stroke thickness:" />
+
+            <xctk:DoubleUpDown
+             x:Name="EStrokeThickness"
+             Width="200"
+             Increment=".1"
+             Watermark="Thickness" />
+
+            <TextBox Width="200" Visibility="Hidden" />
+
+            <Button Click="Apply_Click" Content="Apply" />
+        </StackPanel>
+    </Grid>
+</Window>
