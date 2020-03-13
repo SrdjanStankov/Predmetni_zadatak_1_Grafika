@@ -27,7 +27,8 @@ namespace Predmetni_zadatak_1_Grafika
 
         private void Elipse_Checked(object sender, RoutedEventArgs e)
         {
-            
+            var window = new ElipseWindow();
+            window.Show();
         }
 
         private void Rectangle_Checked(object sender, RoutedEventArgs e)
@@ -58,6 +59,16 @@ namespace Predmetni_zadatak_1_Grafika
         private void Clear_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void CanvasLeftMouse_Click(object sender, MouseButtonEventArgs e)
+        {
+            MessageBox.Show($"{e.GetPosition(Cnv)}");
+        }
+
+        private void CanvasRightMouse_Click(object sender, MouseButtonEventArgs e)
+        {
+            MessageBox.Show($"{e.GetPosition(Cnv)}");
         }
     }
 }

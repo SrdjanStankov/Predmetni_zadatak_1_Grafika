@@ -27,6 +27,18 @@
          Height="380"
          Margin="0,0,0,10"
          HorizontalAlignment="Center"
-         VerticalAlignment="Bottom" />
+         VerticalAlignment="Bottom"
+         Background="Transparent"
+         MouseLeftButtonUp="CanvasLeftMouse_Click"
+         MouseRightButtonUp="CanvasRightMouse_Click">
+            <Ellipse
+             Canvas.Left="50"
+             Canvas.Top="33"
+             Width="20"
+             Height="40"
+             Fill="Aqua"
+             Stroke="DimGray"
+             StrokeThickness="5" />
+        </Canvas>
     </Grid>
 </Window>
