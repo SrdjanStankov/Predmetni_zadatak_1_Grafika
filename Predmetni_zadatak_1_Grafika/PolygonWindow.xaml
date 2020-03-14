@@ -33,7 +33,7 @@
              Width="200"
              DisplayColorAndName="True"
              DisplayColorTooltip="True"
-             SelectedColor="{x:Null}" />
+             SelectedColor="Black" />
             <TextBlock Text="Stroke thickness:" />
 
             <xctk:DoubleUpDown
@@ -45,6 +45,13 @@
             <TextBox Width="200" Visibility="Hidden" />
 
             <Button Click="Apply_Click" Content="Apply" />
+            <TextBox Width="200" Visibility="Hidden" />
+            <Label
+             Name="EErrorMsg"
+             Width="200"
+             Height="26"
+             HorizontalContentAlignment="Center"
+             Foreground="Red" />
         </StackPanel>
     </Grid>
 </Window>

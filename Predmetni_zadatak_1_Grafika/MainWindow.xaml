@@ -17,7 +17,10 @@
                  Content="Elipse"
                  IsChecked="True" />
                 <RadioButton Checked="Rectangle_Checked" Content="Rectangle" />
-                <RadioButton Checked="Polygon_Checked" Content="Polygon" />
+                <RadioButton
+                 x:Name="PolyBtn"
+                 Checked="Polygon_Checked"
+                 Content="Polygon" />
                 <RadioButton Checked="Image_Checked" Content="Image" />
                 <Button Click="Undo_Click" Content="Undo" />
                 <Button Click="Redo_Click" Content="Redo" />

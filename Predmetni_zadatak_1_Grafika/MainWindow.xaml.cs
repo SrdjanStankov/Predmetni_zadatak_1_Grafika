@@ -22,6 +22,8 @@ namespace Predmetni_zadatak_1_Grafika
     {
         private Action<Point> drawMethod;
 
+        private PointCollection points = new PointCollection();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -39,6 +41,7 @@ namespace Predmetni_zadatak_1_Grafika
 
         private void Polygon_Checked(object sender, RoutedEventArgs e)
         {
+            points.Clear();
             drawMethod = PolygonSettings;
         }
 
@@ -64,12 +67,16 @@ namespace Predmetni_zadatak_1_Grafika
 
         private void CanvasLeftMouse_Click(object sender, MouseButtonEventArgs e)
         {
-            
+            if (PolyBtn.IsChecked.Value)
+            {
+                points.Add(e.GetPosition(Cnv));
+            }
         }
 
         private void CanvasRightMouse_Click(object sender, MouseButtonEventArgs e)
         {
             drawMethod(e.GetPosition(Cnv));
+            points.Clear();
         }
 
         private void ElpiseSettings(Point mousePosition)
@@ -142,7 +149,33 @@ namespace Predmetni_zadatak_1_Grafika
 
         private void PolygonSettings(Point mousePosition)
         {
-            throw new NotImplementedException();
+            var window = new PolygonWindow(new PointCollection(points));
+            window.ShowDialog();
+
+            var polygon = window.ResultPolygon;
+            if (polygon != null)
+            {
+                polygon.MouseLeftButtonUp += Polygon_MouseLeftButtonUp;
+                Cnv.Children.Add(polygon);
+            }
+        }
+
+        private void Polygon_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            var polygonClicked = sender as Polygon;
+
+            var window = new PolygonWindow(polygonClicked);
+            window.ShowDialog();
+
+            var index = Cnv.Children.IndexOf(polygonClicked);
+            var polygon = window.ResultPolygon;
+            polygon.MouseLeftButtonUp -= Polygon_MouseLeftButtonUp;
+            polygon.MouseLeftButtonUp += Polygon_MouseLeftButtonUp;
+
+            Cnv.Children.RemoveAt(index);
+            Cnv.Children.Insert(index, polygon);
+            points.Clear();
+            e.Handled = true;
         }
 
         private void ImageSettings(Point mousePosition)
