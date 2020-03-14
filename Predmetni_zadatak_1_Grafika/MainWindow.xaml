@@ -8,6 +8,7 @@
  Title="MainWindow"
  Width="800"
  Height="450"
+ WindowStartupLocation="CenterOwner"
  mc:Ignorable="d">
     <Grid>
         <DockPanel>

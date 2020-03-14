@@ -81,7 +81,10 @@ namespace Predmetni_zadatak_1_Grafika
 
         private void ElpiseSettings(Point mousePosition)
         {
-            var window = new ElipseWindow();
+            var window = new ElipseWindow()
+            {
+                Owner = this
+            };
             window.ShowDialog();
             var ellipse = window.ResultedEllipse;
             if (ellipse != null)
@@ -99,7 +102,10 @@ namespace Predmetni_zadatak_1_Grafika
             var canvasLeft = ellipseClicked.GetValue(Canvas.LeftProperty);
             var canvasTop = ellipseClicked.GetValue(Canvas.TopProperty);
 
-            var window = new ElipseWindow(ellipseClicked);
+            var window = new ElipseWindow(ellipseClicked)
+            {
+                Owner = this
+            };
             window.ShowDialog();
 
             var index = Cnv.Children.IndexOf(ellipseClicked);
@@ -115,7 +121,10 @@ namespace Predmetni_zadatak_1_Grafika
 
         private void RectangleSettings(Point mousePosition)
         {
-            var window = new RectangleWindow();
+            var window = new RectangleWindow()
+            {
+                Owner = this
+            };
             window.ShowDialog();
             var rectangle = window.ResultedRectangle;
             if (rectangle != null)
@@ -133,7 +142,10 @@ namespace Predmetni_zadatak_1_Grafika
             var canvasLeft = rectangleClicked.GetValue(Canvas.LeftProperty);
             var canvasTop = rectangleClicked.GetValue(Canvas.TopProperty);
 
-            var window = new RectangleWindow(rectangleClicked);
+            var window = new RectangleWindow(rectangleClicked)
+            {
+                Owner = this
+            };
             window.ShowDialog();
 
             var index = Cnv.Children.IndexOf(rectangleClicked);
@@ -149,7 +161,10 @@ namespace Predmetni_zadatak_1_Grafika
 
         private void PolygonSettings(Point mousePosition)
         {
-            var window = new PolygonWindow(new PointCollection(points));
+            var window = new PolygonWindow(new PointCollection(points))
+            {
+                Owner = this
+            };
             window.ShowDialog();
 
             var polygon = window.ResultPolygon;
@@ -164,7 +179,10 @@ namespace Predmetni_zadatak_1_Grafika
         {
             var polygonClicked = sender as Polygon;
 
-            var window = new PolygonWindow(polygonClicked);
+            var window = new PolygonWindow(polygonClicked)
+            {
+                Owner = this
+            };
             window.ShowDialog();
 
             var index = Cnv.Children.IndexOf(polygonClicked);
@@ -180,7 +198,10 @@ namespace Predmetni_zadatak_1_Grafika
 
         private void ImageSettings(Point mousePosition)
         {
-            var window = new ImageWindow();
+            var window = new ImageWindow()
+            {
+                Owner = this
+            };
             window.ShowDialog();
 
             var image = window.ResultedImage;
@@ -199,7 +220,7 @@ namespace Predmetni_zadatak_1_Grafika
             var canvasLeft = imageClicked.GetValue(Canvas.LeftProperty);
             var canvasTop = imageClicked.GetValue(Canvas.TopProperty);
 
-            var window = new ImageWindow(imageClicked);
+            var window = new ImageWindow(imageClicked) { Owner = this };
             window.ShowDialog();
 
             var index = Cnv.Children.IndexOf(imageClicked);

@@ -9,6 +9,7 @@
  Title="Image"
  Width="336"
  Height="364"
+ WindowStartupLocation="CenterOwner"
  mc:Ignorable="d">
     <Grid>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
