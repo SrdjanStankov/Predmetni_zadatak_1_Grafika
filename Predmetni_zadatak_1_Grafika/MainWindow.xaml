@@ -12,7 +12,10 @@
     <Grid>
         <DockPanel>
             <Menu>
-                <RadioButton Checked="Elipse_Checked" Content="Elipse" />
+                <RadioButton
+                 Checked="Elipse_Checked"
+                 Content="Elipse"
+                 IsChecked="True" />
                 <RadioButton Checked="Rectangle_Checked" Content="Rectangle" />
                 <RadioButton Checked="Polygon_Checked" Content="Polygon" />
                 <RadioButton Checked="Image_Checked" Content="Image" />

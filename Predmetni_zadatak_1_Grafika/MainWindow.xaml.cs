@@ -20,6 +20,8 @@ namespace Predmetni_zadatak_1_Grafika
     /// </summary>
     public partial class MainWindow : Window
     {
+        private Action drawMethod;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -27,24 +29,22 @@ namespace Predmetni_zadatak_1_Grafika
 
         private void Elipse_Checked(object sender, RoutedEventArgs e)
         {
-            var window = new ElipseWindow();
-            window.Show();
+            drawMethod = ElpiseSettings;
         }
 
         private void Rectangle_Checked(object sender, RoutedEventArgs e)
         {
-            var window = new RectangleWindow();
-            window.Show();
+            drawMethod = RectangleSettings;
         }
 
         private void Polygon_Checked(object sender, RoutedEventArgs e)
         {
-
+            drawMethod = PolygonSettings;
         }
 
         private void Image_Checked(object sender, RoutedEventArgs e)
         {
-
+            drawMethod = ImageSettings;
         }
 
         private void Undo_Click(object sender, RoutedEventArgs e)
@@ -69,7 +69,28 @@ namespace Predmetni_zadatak_1_Grafika
 
         private void CanvasRightMouse_Click(object sender, MouseButtonEventArgs e)
         {
+            drawMethod();
             MessageBox.Show($"{e.GetPosition(Cnv)}");
+        }
+
+        private void ElpiseSettings()
+        {
+            MessageBox.Show("Ellipse settings");
+        }
+        
+        private void RectangleSettings()
+        {
+            MessageBox.Show("Rectangle settings");
+        }
+        
+        private void PolygonSettings()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void ImageSettings()
+        {
+            throw new NotImplementedException();
         }
     }
 }
