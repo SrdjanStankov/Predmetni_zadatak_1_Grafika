@@ -20,7 +20,7 @@ namespace Predmetni_zadatak_1_Grafika
     /// </summary>
     public partial class MainWindow : Window
     {
-        private Action drawMethod;
+        private Action<Point> drawMethod;
 
         public MainWindow()
         {
@@ -69,26 +69,53 @@ namespace Predmetni_zadatak_1_Grafika
 
         private void CanvasRightMouse_Click(object sender, MouseButtonEventArgs e)
         {
-            drawMethod();
-            MessageBox.Show($"{e.GetPosition(Cnv)}");
+            drawMethod(e.GetPosition(Cnv));
         }
 
-        private void ElpiseSettings()
+        private void ElpiseSettings(Point mousePosition)
         {
-            MessageBox.Show("Ellipse settings");
+            var window = new ElipseWindow();
+            window.ShowDialog();
+            var ellipse = window.ResultedEllipse;
+            if (ellipse != null)
+            {
+                ellipse.SetValue(Canvas.LeftProperty, mousePosition.X);
+                ellipse.SetValue(Canvas.TopProperty, mousePosition.Y);
+                ellipse.MouseLeftButtonUp += Ellipse_MouseLeftButtonUp;
+                Cnv.Children.Add(ellipse); 
+            }
         }
-        
-        private void RectangleSettings()
+
+        private void Ellipse_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            var ellipseClicked = sender as Ellipse;
+            var canvasLeft = ellipseClicked.GetValue(Canvas.LeftProperty);
+            var canvasTop = ellipseClicked.GetValue(Canvas.TopProperty);
+
+            var window = new ElipseWindow(ellipseClicked);
+            window.ShowDialog();
+
+            var index = Cnv.Children.IndexOf(ellipseClicked);
+            var ellipse = window.ResultedEllipse;
+            ellipse.SetValue(Canvas.LeftProperty, canvasLeft);
+            ellipse.SetValue(Canvas.TopProperty, canvasTop);
+            ellipse.MouseLeftButtonUp += Ellipse_MouseLeftButtonUp;
+
+            Cnv.Children.RemoveAt(index);
+            Cnv.Children.Insert(index, ellipse);
+        }
+
+        private void RectangleSettings(Point mousePosition)
         {
             MessageBox.Show("Rectangle settings");
         }
-        
-        private void PolygonSettings()
+
+        private void PolygonSettings(Point mousePosition)
         {
             throw new NotImplementedException();
         }
 
-        private void ImageSettings()
+        private void ImageSettings(Point mousePosition)
         {
             throw new NotImplementedException();
         }
