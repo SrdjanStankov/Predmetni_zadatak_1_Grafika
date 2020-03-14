@@ -34,11 +34,23 @@
              Watermark="Height" />
 
             <TextBlock Width="200" />
-            <Button Width="200" Content="Choose image" />
+            <Button
+             Width="200"
+             Click="ChooseImage_Click"
+             Content="Choose image" />
+            <TextBlock x:Name="ImgUri" Width="200" />
 
             <TextBox Width="200" Visibility="Hidden" />
 
             <Button Click="Apply_Click" Content="Apply" />
+            <TextBox Width="200" Visibility="Hidden" />
+
+            <Label
+             Name="EErrorMsg"
+             Width="200"
+             Height="26"
+             HorizontalContentAlignment="Center"
+             Foreground="Red" />
         </StackPanel>
     </Grid>
 </Window>

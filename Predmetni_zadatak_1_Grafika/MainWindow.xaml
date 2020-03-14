@@ -37,14 +37,12 @@
          Background="Transparent"
          MouseLeftButtonUp="CanvasLeftMouse_Click"
          MouseRightButtonUp="CanvasRightMouse_Click">
-            <Rectangle
+            <Image
              Canvas.Left="50"
              Canvas.Top="33"
-             Width="20"
-             Height="40"
-             Fill="Aqua"
-             Stroke="DimGray"
-             StrokeThickness="5" />
+             Width="129"
+             Height="100"
+             Source="C:\Users\srkim\Pictures\Saved Pictures\Background\517913.jpg" />
         </Canvas>
     </Grid>
 </Window>

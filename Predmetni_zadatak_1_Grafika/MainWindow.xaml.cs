@@ -180,7 +180,37 @@ namespace Predmetni_zadatak_1_Grafika
 
         private void ImageSettings(Point mousePosition)
         {
-            throw new NotImplementedException();
+            var window = new ImageWindow();
+            window.ShowDialog();
+
+            var image = window.ResultedImage;
+            if (image != null)
+            {
+                image.SetValue(Canvas.LeftProperty, mousePosition.X);
+                image.SetValue(Canvas.TopProperty, mousePosition.Y);
+                image.MouseLeftButtonUp += Image_MouseLeftButtonUp;
+                Cnv.Children.Add(image);
+            }
+        }
+
+        private void Image_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            var imageClicked = sender as Image;
+            var canvasLeft = imageClicked.GetValue(Canvas.LeftProperty);
+            var canvasTop = imageClicked.GetValue(Canvas.TopProperty);
+
+            var window = new ImageWindow(imageClicked);
+            window.ShowDialog();
+
+            var index = Cnv.Children.IndexOf(imageClicked);
+            var image = window.ResultedImage;
+            image.SetValue(Canvas.LeftProperty, canvasLeft);
+            image.SetValue(Canvas.TopProperty, canvasTop);
+            image.MouseLeftButtonUp -= Image_MouseLeftButtonUp;
+            image.MouseLeftButtonUp += Image_MouseLeftButtonUp;
+
+            Cnv.Children.RemoveAt(index);
+            Cnv.Children.Insert(index, image);
         }
     }
 }
