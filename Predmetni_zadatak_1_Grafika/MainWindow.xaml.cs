@@ -64,7 +64,7 @@ namespace Predmetni_zadatak_1_Grafika
 
         private void CanvasLeftMouse_Click(object sender, MouseButtonEventArgs e)
         {
-            MessageBox.Show($"{e.GetPosition(Cnv)}");
+            
         }
 
         private void CanvasRightMouse_Click(object sender, MouseButtonEventArgs e)
@@ -99,6 +99,7 @@ namespace Predmetni_zadatak_1_Grafika
             var ellipse = window.ResultedEllipse;
             ellipse.SetValue(Canvas.LeftProperty, canvasLeft);
             ellipse.SetValue(Canvas.TopProperty, canvasTop);
+            ellipse.MouseLeftButtonUp -= Ellipse_MouseLeftButtonUp;
             ellipse.MouseLeftButtonUp += Ellipse_MouseLeftButtonUp;
 
             Cnv.Children.RemoveAt(index);
@@ -107,7 +108,36 @@ namespace Predmetni_zadatak_1_Grafika
 
         private void RectangleSettings(Point mousePosition)
         {
-            MessageBox.Show("Rectangle settings");
+            var window = new RectangleWindow();
+            window.ShowDialog();
+            var rectangle = window.ResultedRectangle;
+            if (rectangle != null)
+            {
+                rectangle.SetValue(Canvas.LeftProperty, mousePosition.X);
+                rectangle.SetValue(Canvas.TopProperty, mousePosition.Y);
+                rectangle.MouseLeftButtonUp += Rectangle_MouseLeftButtonUp;
+                Cnv.Children.Add(rectangle);
+            }
+        }
+
+        private void Rectangle_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            var rectangleClicked = sender as Rectangle;
+            var canvasLeft = rectangleClicked.GetValue(Canvas.LeftProperty);
+            var canvasTop = rectangleClicked.GetValue(Canvas.TopProperty);
+
+            var window = new RectangleWindow(rectangleClicked);
+            window.ShowDialog();
+
+            var index = Cnv.Children.IndexOf(rectangleClicked);
+            var rectangle = window.ResultedRectangle;
+            rectangle.SetValue(Canvas.LeftProperty, canvasLeft);
+            rectangle.SetValue(Canvas.TopProperty, canvasTop);
+            rectangle.MouseLeftButtonUp -= Rectangle_MouseLeftButtonUp;
+            rectangle.MouseLeftButtonUp += Rectangle_MouseLeftButtonUp;
+
+            Cnv.Children.RemoveAt(index);
+            Cnv.Children.Insert(index, rectangle);
         }
 
         private void PolygonSettings(Point mousePosition)
