@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Automation.Peers;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Markup.Localizer;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
@@ -23,6 +25,10 @@ namespace Predmetni_zadatak_1_Grafika
         private Action<Point> drawMethod;
 
         private PointCollection points = new PointCollection();
+
+        // name of action that caused it, index of object on canvas, object itself
+        private Stack<Tuple<string, int, object>> undoStack = new Stack<Tuple<string, int, object>>();
+        private Stack<Tuple<string, int, object>> redoStack = new Stack<Tuple<string, int, object>>();
 
         public MainWindow()
         {
@@ -52,16 +58,64 @@ namespace Predmetni_zadatak_1_Grafika
 
         private void Undo_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                if (undoStack.Count <= 0)
+                {
+                    return;
+                }
 
+                var undoObj = undoStack.Pop();
+                switch (undoObj.Item1)
+                {
+                    case "add":
+                        Cnv.Children.RemoveAt(undoObj.Item2);
+                        redoStack.Push(new Tuple<string, int, object>("del", undoObj.Item2, undoObj.Item3));
+                        break;
+                    case "clr":
+                        foreach (var item in undoObj.Item3 as List<UIElement>)
+                        {
+                            Cnv.Children.Add(item);
+                        }
+                        redoStack.Push(new Tuple<string, int, object>("clr", -1, null));
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch (Exception) { }
         }
 
         private void Redo_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                if (redoStack.Count <= 0)
+                {
+                    return;
+                }
 
+                var redoObj = redoStack.Pop();
+                switch (redoObj.Item1)
+                {
+                    case "del":
+                        Cnv.Children.Insert(redoObj.Item2, redoObj.Item3 as UIElement);
+                        undoStack.Push(new Tuple<string, int, object>("add", redoObj.Item2, redoObj.Item3));
+                        break;
+                    case "clr":
+                        undoStack.Push(new Tuple<string, int, object>("clr", -1, (from UIElement item in Cnv.Children select item).ToList()));
+                        Cnv.Children.Clear();
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch (Exception) { }
         }
 
         private void Clear_Click(object sender, RoutedEventArgs e)
         {
+            undoStack.Push(new Tuple<string, int, object>("clr", -1, (from UIElement item in Cnv.Children select item).ToList()));
             Cnv.Children.Clear();
         }
 
@@ -92,15 +146,14 @@ namespace Predmetni_zadatak_1_Grafika
                 ellipse.SetValue(Canvas.LeftProperty, mousePosition.X);
                 ellipse.SetValue(Canvas.TopProperty, mousePosition.Y);
                 ellipse.MouseLeftButtonUp += Ellipse_MouseLeftButtonUp;
-                Cnv.Children.Add(ellipse); 
+                Cnv.Children.Add(ellipse);
+                undoStack.Push(new Tuple<string, int, object>("add", Cnv.Children.IndexOf(ellipse), ellipse));
             }
         }
 
         private void Ellipse_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             var ellipseClicked = sender as Ellipse;
-            var canvasLeft = ellipseClicked.GetValue(Canvas.LeftProperty);
-            var canvasTop = ellipseClicked.GetValue(Canvas.TopProperty);
 
             var window = new ElipseWindow(ellipseClicked)
             {
@@ -108,15 +161,7 @@ namespace Predmetni_zadatak_1_Grafika
             };
             window.ShowDialog();
 
-            var index = Cnv.Children.IndexOf(ellipseClicked);
-            var ellipse = window.ResultedEllipse;
-            ellipse.SetValue(Canvas.LeftProperty, canvasLeft);
-            ellipse.SetValue(Canvas.TopProperty, canvasTop);
-            ellipse.MouseLeftButtonUp -= Ellipse_MouseLeftButtonUp;
-            ellipse.MouseLeftButtonUp += Ellipse_MouseLeftButtonUp;
-
-            Cnv.Children.RemoveAt(index);
-            Cnv.Children.Insert(index, ellipse);
+            UpdateObjectValues(Cnv.Children.IndexOf(ellipseClicked), window.ResultedEllipse);
         }
 
         private void RectangleSettings(Point mousePosition)
@@ -133,14 +178,13 @@ namespace Predmetni_zadatak_1_Grafika
                 rectangle.SetValue(Canvas.TopProperty, mousePosition.Y);
                 rectangle.MouseLeftButtonUp += Rectangle_MouseLeftButtonUp;
                 Cnv.Children.Add(rectangle);
+                undoStack.Push(new Tuple<string, int, object>("add", Cnv.Children.IndexOf(rectangle), rectangle));
             }
         }
 
         private void Rectangle_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             var rectangleClicked = sender as Rectangle;
-            var canvasLeft = rectangleClicked.GetValue(Canvas.LeftProperty);
-            var canvasTop = rectangleClicked.GetValue(Canvas.TopProperty);
 
             var window = new RectangleWindow(rectangleClicked)
             {
@@ -148,15 +192,7 @@ namespace Predmetni_zadatak_1_Grafika
             };
             window.ShowDialog();
 
-            var index = Cnv.Children.IndexOf(rectangleClicked);
-            var rectangle = window.ResultedRectangle;
-            rectangle.SetValue(Canvas.LeftProperty, canvasLeft);
-            rectangle.SetValue(Canvas.TopProperty, canvasTop);
-            rectangle.MouseLeftButtonUp -= Rectangle_MouseLeftButtonUp;
-            rectangle.MouseLeftButtonUp += Rectangle_MouseLeftButtonUp;
-
-            Cnv.Children.RemoveAt(index);
-            Cnv.Children.Insert(index, rectangle);
+            UpdateObjectValues(Cnv.Children.IndexOf(rectangleClicked), window.ResultedRectangle);
         }
 
         private void PolygonSettings(Point mousePosition)
@@ -172,6 +208,7 @@ namespace Predmetni_zadatak_1_Grafika
             {
                 polygon.MouseLeftButtonUp += Polygon_MouseLeftButtonUp;
                 Cnv.Children.Add(polygon);
+                undoStack.Push(new Tuple<string, int, object>("add", Cnv.Children.IndexOf(polygon), polygon));
             }
         }
 
@@ -185,14 +222,7 @@ namespace Predmetni_zadatak_1_Grafika
             };
             window.ShowDialog();
 
-            var index = Cnv.Children.IndexOf(polygonClicked);
-            var polygon = window.ResultPolygon;
-            polygon.MouseLeftButtonUp -= Polygon_MouseLeftButtonUp;
-            polygon.MouseLeftButtonUp += Polygon_MouseLeftButtonUp;
-
-            Cnv.Children.RemoveAt(index);
-            Cnv.Children.Insert(index, polygon);
-            points.Clear();
+            UpdateObjectValues(Cnv.Children.IndexOf(polygonClicked), window.ResultPolygon);
             e.Handled = true;
         }
 
@@ -211,27 +241,37 @@ namespace Predmetni_zadatak_1_Grafika
                 image.SetValue(Canvas.TopProperty, mousePosition.Y);
                 image.MouseLeftButtonUp += Image_MouseLeftButtonUp;
                 Cnv.Children.Add(image);
+                undoStack.Push(new Tuple<string, int, object>("add", Cnv.Children.IndexOf(image), image));
             }
         }
 
         private void Image_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             var imageClicked = sender as Image;
-            var canvasLeft = imageClicked.GetValue(Canvas.LeftProperty);
-            var canvasTop = imageClicked.GetValue(Canvas.TopProperty);
 
             var window = new ImageWindow(imageClicked) { Owner = this };
             window.ShowDialog();
 
-            var index = Cnv.Children.IndexOf(imageClicked);
-            var image = window.ResultedImage;
-            image.SetValue(Canvas.LeftProperty, canvasLeft);
-            image.SetValue(Canvas.TopProperty, canvasTop);
-            image.MouseLeftButtonUp -= Image_MouseLeftButtonUp;
-            image.MouseLeftButtonUp += Image_MouseLeftButtonUp;
+            UpdateObjectValues(Cnv.Children.IndexOf(imageClicked), window.ResultedImage);
+        }
 
-            Cnv.Children.RemoveAt(index);
-            Cnv.Children.Insert(index, image);
+        private void UpdateObjectValues(int index, object objectToUpdate)
+        {
+            var fe = objectToUpdate as FrameworkElement;
+
+            Cnv.Children[index].SetValue(WidthProperty, fe.Width);
+            Cnv.Children[index].SetValue(HeightProperty, fe.Height);
+
+            if (objectToUpdate is Shape shape)
+            {
+                Cnv.Children[index].SetValue(Shape.FillProperty, shape.Fill);
+                Cnv.Children[index].SetValue(Shape.StrokeProperty, shape.Stroke);
+                Cnv.Children[index].SetValue(Shape.StrokeThicknessProperty, shape.StrokeThickness);
+            }
+            else if (objectToUpdate is Image img)
+            {
+                Cnv.Children[index].SetValue(Image.SourceProperty, img.Source);
+            }
         }
     }
 }
