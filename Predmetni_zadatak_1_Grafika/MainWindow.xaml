@@ -12,21 +12,45 @@
  mc:Ignorable="d">
     <Grid>
         <DockPanel>
-            <Menu>
+            <StackPanel
+             HorizontalAlignment="Center"
+             VerticalAlignment="Top"
+             DockPanel.Dock="Top"
+             Orientation="Horizontal">
                 <RadioButton
+                 Margin="8,4,8,0"
                  Checked="Elipse_Checked"
                  Content="Elipse"
                  IsChecked="True" />
-                <RadioButton Checked="Rectangle_Checked" Content="Rectangle" />
+                <RadioButton
+                 Margin="8,4,8,0"
+                 Checked="Rectangle_Checked"
+                 Content="Rectangle" />
                 <RadioButton
                  x:Name="PolyBtn"
+                 Margin="8,4,8,0"
                  Checked="Polygon_Checked"
                  Content="Polygon" />
-                <RadioButton Checked="Image_Checked" Content="Image" />
-                <Button Click="Undo_Click" Content="Undo" />
-                <Button Click="Redo_Click" Content="Redo" />
-                <Button Click="Clear_Click" Content="Clear" />
-            </Menu>
+                <RadioButton
+                 Margin="8,4,8,0"
+                 Checked="Image_Checked"
+                 Content="Image" />
+                <Button
+                 Width="46"
+                 Margin="8,4,8,0"
+                 Click="Undo_Click"
+                 Content="Undo" />
+                <Button
+                 Width="44"
+                 Margin="8,4,8,0"
+                 Click="Redo_Click"
+                 Content="Redo" />
+                <Button
+                 Width="44"
+                 Margin="8,4,8,0"
+                 Click="Clear_Click"
+                 Content="Clear" />
+            </StackPanel>
         </DockPanel>
         <Canvas
          Name="Cnv"
@@ -37,13 +61,6 @@
          VerticalAlignment="Bottom"
          Background="Transparent"
          MouseLeftButtonUp="CanvasLeftMouse_Click"
-         MouseRightButtonUp="CanvasRightMouse_Click">
-            <Image
-             Canvas.Left="50"
-             Canvas.Top="33"
-             Width="129"
-             Height="100"
-             Source="C:\Users\srkim\Pictures\Saved Pictures\Background\517913.jpg" />
-        </Canvas>
+         MouseRightButtonUp="CanvasRightMouse_Click" />
     </Grid>
 </Window>
