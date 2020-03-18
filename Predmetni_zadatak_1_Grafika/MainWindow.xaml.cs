@@ -33,6 +33,16 @@ namespace Predmetni_zadatak_1_Grafika
         public MainWindow()
         {
             InitializeComponent();
+            CreateScortcut(Key.Z, ModifierKeys.Control, Undo_Click);
+            CreateScortcut(Key.Y, ModifierKeys.Control, Redo_Click);
+            CreateScortcut(Key.C, ModifierKeys.Control, Clear_Click);
+        }
+
+        void CreateScortcut(Key key, ModifierKeys modifier, ExecutedRoutedEventHandler handler)
+        {
+            var cmd = new RoutedCommand();
+            cmd.InputGestures.Add(new KeyGesture(key, modifier));
+            CommandBindings.Add(new CommandBinding(cmd, handler));
         }
 
         private void Elipse_Checked(object sender, RoutedEventArgs e)
