@@ -9,7 +9,9 @@
  Title="Polygon"
  Width="336"
  Height="364"
+ FocusManager.FocusedElement="{Binding ElementName=EStrokeThickness}"
  WindowStartupLocation="CenterOwner"
+ WindowStyle="ToolWindow"
  mc:Ignorable="d">
     <Grid>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -45,7 +47,10 @@
 
             <TextBox Width="200" Visibility="Hidden" />
 
-            <Button Click="Apply_Click" Content="Apply" />
+            <Button
+             Click="Apply_Click"
+             Content="Apply"
+             IsDefault="True" />
             <TextBox Width="200" Visibility="Hidden" />
             <Label
              Name="EErrorMsg"
