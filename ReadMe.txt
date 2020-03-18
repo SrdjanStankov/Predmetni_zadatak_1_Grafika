@@ -1,5 +1,6 @@
 - .Net verzija 4.6.1
 - Korišćen paket "Extended.Wpf.Toolkit.3.8.1" radi lakšeg izbora boja i vrednosti u WPF-u
+- Github: https://github.com/SrdjanStankov/Predmetni_zadatak_1_Grafika
 
 - Ellipse, Rectangle, Image: Desni klik otvara window sa atributima
 - Polygon: Levi klik dodaje tačku poligona, desni klik otvara window sa atributima
