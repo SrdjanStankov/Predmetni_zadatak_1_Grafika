@@ -163,6 +163,11 @@ namespace Predmetni_zadatak_1_Grafika
 
         private void Ellipse_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
+            if (PolyBtn.IsChecked.Value)
+            {
+                return;
+            }
+
             var ellipseClicked = sender as Ellipse;
 
             var window = new ElipseWindow(ellipseClicked)
@@ -194,6 +199,11 @@ namespace Predmetni_zadatak_1_Grafika
 
         private void Rectangle_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
+            if (PolyBtn.IsChecked.Value)
+            {
+                return;
+            }
+
             var rectangleClicked = sender as Rectangle;
 
             var window = new RectangleWindow(rectangleClicked)
@@ -224,6 +234,11 @@ namespace Predmetni_zadatak_1_Grafika
 
         private void Polygon_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
+            if (PolyBtn.IsChecked.Value)
+            {
+                return;
+            }
+
             var polygonClicked = sender as Polygon;
 
             var window = new PolygonWindow(polygonClicked)
@@ -257,6 +272,11 @@ namespace Predmetni_zadatak_1_Grafika
 
         private void Image_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
+            if (PolyBtn.IsChecked.Value)
+            {
+                return;
+            }
+
             var imageClicked = sender as Image;
 
             var window = new ImageWindow(imageClicked) { Owner = this };
